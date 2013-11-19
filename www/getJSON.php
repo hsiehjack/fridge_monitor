@@ -1,5 +1,5 @@
 <?php
-$link = mysql_connect('pi', 'pi', 'pi')
+$link = mysql_connect('localhost', 'pi', 'pi')
     or die('Could not connect: ' . mysql_error());
 mysql_select_db('pi') or die('select db error');
 
