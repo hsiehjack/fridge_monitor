@@ -82,7 +82,7 @@ init_db()
 while True:
 	date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 	temp = read_temp()
-	print("%s %s" % (date, temp))
+	#print("%s %s" % (date, temp))
 	insert(date, temp)
 	door = 0;
 
