@@ -7,11 +7,13 @@
 		google.load('visualization', '1', {packages:['gauge']});
 		google.setOnLoadCallback(drawChart);
 		function drawChart() {
+/*
 			var jsonData = $.ajax({
 				url: "getJSON.php",
 				dataType:"json",
 				async: false
 			}).responseText;
+*/
 /* Static Gauge Datatable JSON
 			var jsonData = {
 				cols: [
@@ -30,8 +32,13 @@
 				['Temperature', 80],
 			]);
 */
-			var data = new google.visualization.DataTable(jsonData);
-			var options = {
+			var gaugeJsonData = $.ajax({
+				url: "getJSON.php?style=gauge",
+				dataType:"json",
+				async: false
+			}).responseText;
+			var gaugeData = new google.visualization.DataTable(gaugeJsonData);
+			var gaugeOptions = {
 				width: 600, height: 300,
 				greenFrom: 32, greenTo: 40,
 				yellowFrom:40, yellowTo: 50,
@@ -41,10 +48,10 @@
 			};
 
 			var chart = new google.visualization.Gauge(document.getElementById('gauge'));
-			chart.draw(data, options);
+			chart.draw(gaugeData, gaugeOptions);
 		}
-// This is redraw the image
-//		setInterval(drawChart, 5000);
+		// This is redraw the image
+		setInterval(drawChart, 5000);
 	</script>
 </head>
 <body>
