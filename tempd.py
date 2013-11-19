@@ -40,7 +40,7 @@ def init_db():
 	cursor.execute("DROP TABLE IF EXISTS DATETEMP")
 	
 	# Create table as per requirement
-	sql = "CREATE TABLE DATETEMP (DATE TIMESTAMP, TEMP FLOAT)"
+	sql = "CREATE TABLE DATETEMP (ID INT AUTO_INCREMENT, DATE TIMESTAMP, TEMP FLOAT, PRIMARY KEY (ID))"
 
 	cursor.execute(sql)
 
@@ -82,7 +82,7 @@ init_db()
 while True:
 	date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 	temp = read_temp()
-	#print("%s %s" % (date, temp))
+	print("%s %s" % (date, temp))
 	insert(date, temp)
 	door = 0;
 
