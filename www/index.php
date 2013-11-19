@@ -5,12 +5,13 @@
 	<script type='text/javascript'>
 		google.load('visualization', '1', {packages:['gauge']});
 		google.setOnLoadCallback(drawChart);
+                var jsonData = $.ajax({
+                        url: "getJSON.php",
+                        dataType:"json",
+                        async: false
+                        }).responseText;
 		function drawChart() {
-			var data = google.visualization.arrayToDataTable([
-				['Label', 'Value'],
-				['Temperature', 80],
-			]);
-
+			var data = google.visualization.arrayToDataTable(jsonData);
 			var options = {
 				width: 300, height: 300,
 				greenFrom: 32, greenTo: 40,
