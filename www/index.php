@@ -2,17 +2,37 @@
 <html>
 <head>
 	<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script type='text/javascript'>
 		google.load('visualization', '1', {packages:['gauge']});
 		google.setOnLoadCallback(drawChart);
 		function drawChart() {
+			var jsonData = $.ajax({
+				url: "getJSON.php",
+				dataType:"json",
+				async: false
+			}).responseText;
+/* Static Gauge Datatable JSON
+			var jsonData = {
+				cols: [
+					{id: 'Label', label: 'Label', type:'string'},
+					{id: 'Value', label: 'Value', type: 'number'}
+				],
+				rows: [
+					{c:[{v: 'Temperature'}, {v: 80}]},
+					{c:[{v: 'Door Opened'}, {v: 0}]}
+				]
+			}
+*/
+/* Static Gauge DataTable
 			var data = google.visualization.arrayToDataTable([
 				['Label', 'Value'],
 				['Temperature', 80],
 			]);
-
+*/
+			var data = new google.visualization.DataTable(jsonData);
 			var options = {
-				width: 300, height: 300,
+				width: 600, height: 300,
 				greenFrom: 32, greenTo: 40,
 				yellowFrom:40, yellowTo: 50,
 				redFrom: 50, redTo: 80,
@@ -20,13 +40,14 @@
 				min: 30, max: 80,
 			};
 
-			var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+			var chart = new google.visualization.Gauge(document.getElementById('gauge'));
 			chart.draw(data, options);
 		}
-		setInterval(drawChart, 5000);
+// This is redraw the image
+//		setInterval(drawChart, 5000);
 	</script>
 </head>
 <body>
-	<div id="chart_div"></div>
+	<div id="gauge"></div>
 </body>
 </html>
