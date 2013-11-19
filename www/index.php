@@ -22,7 +22,7 @@
 				min: 30, max: 80,
 			};
 
-			var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+			var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
 			chart.draw(data, options);
 		}
 		setInterval(drawChart, 5000);
