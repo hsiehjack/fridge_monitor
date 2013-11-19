@@ -10,7 +10,9 @@ from datetime import datetime
 from RPLCD import CharLCD
 from subprocess import * 
 import RPIO
- 
+
+RPIO.setwarnings(False)
+
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
  
