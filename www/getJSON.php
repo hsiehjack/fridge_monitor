@@ -12,18 +12,18 @@ switch ($style) {
 	case "gauge":
 		$sql="SELECT temp FROM datetemp ORDER BY id DESC LIMIT 1";
 		$result = mysqli_query($con, $sql);
-		$table = <<<JSONHERE
-{
-	"cols": [
-		{"id": "Label", "label": "Label", "type":"string"},
-		{"id": "Value", "label": "Value", "type":"number"}
-	],
-	"rows": [
-JSONHERE;
-		while ($row = mysqli_fetch_assoc($result)) {
-			$table .= "{\"c\":[{\"v\": \"Temperature\"}, {\"v\": " . $row['temp'] . "}]}";
+
+		$table['cols'] = array(
+		    array('id' => 'Label', 'label' => 'Label', 'type' => 'string'),
+		    array('id' => 'Value', 'label' => 'Value', 'type' => 'number')
+		);
+		while($row = mysqli_fetch_array($result)){ 
+			$data = array();
+			$data[] = array('v' => $row['date']);
+			$data[] = array('v' => $row['temp'];
+			$rows[] = array('c' => $data);
 		}
-		$table .= "]}";
+		$table['rows'] = $rows;
 		break;
 
 	case "graph":
@@ -46,14 +46,6 @@ JSONHERE;
 		break;
 }
 
-/*
-while ($row = mysqli_fetch_array($result)) {
-print $row[0] . '<br />';
-print $row[1];
-}
-*/
-
-echo $table;
-
 mysqli_close($con);
+echo json_encode($table); 
 ?>

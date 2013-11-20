@@ -6,6 +6,11 @@
 	<script type='text/javascript'>
 		google.load('visualization', '1', {packages:['corechart', 'gauge']});
 		google.setOnLoadCallback(drawChart);
+                var jsonData = $.ajax({
+                        url: "getJSON.php",
+                        dataType:"json",
+                        async: false
+                        }).responseText;
 		function drawChart() {
 /*
 			var jsonData = $.ajax({
@@ -56,7 +61,17 @@
 				min: 30, max: 80,
 			};
 			var graphOptions = {
-				title: 'Temperature'
+				title: 'Temperature',
+				vAxis: {
+					gridlines:{count:5},
+					minValue: 0,
+					maxValue: 100
+					} 
+				/*hAxis: {
+					gridlines:{count:3},
+					minValue: new Date(2012, 1, 31),
+					maxValue: new Date(2012, 9, 30),
+					}*/	
 			};
 
 			var gauge = new google.visualization.Gauge(document.getElementById('gauge'));
