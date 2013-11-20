@@ -10,7 +10,9 @@ from datetime import datetime
 from RPLCD import CharLCD
 from subprocess import * 
 import RPIO
- 
+
+RPIO.setwarnings(False)
+
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
  
@@ -37,10 +39,10 @@ def init_db():
 	cursor = db.cursor()
 
 	# Drop table if it already exist using execute() method.
-	cursor.execute("DROP TABLE IF EXISTS DATETEMP")
+	cursor.execute("DROP TABLE IF EXISTS datetemp")
 	
 	# Create table as per requirement
-	sql = "CREATE TABLE DATETEMP (ID INT AUTO_INCREMENT, DATE TIMESTAMP, TEMP FLOAT, PRIMARY KEY (ID))"
+	sql = "CREATE TABLE datetemp (id INT AUTO_INCREMENT, date TIMESTAMP, temp FLOAT, PRIMARY KEY (id))"
 
 	cursor.execute(sql)
 
@@ -49,7 +51,7 @@ def insert(date, temp):
 	cursor = db.cursor()
 
 	# Prepare SQL query to INSERT a record into the database.
-	sql = "INSERT INTO DATETEMP(DATE, TEMP) \
+	sql = "INSERT INTO datetemp(date, temp) \
          	VALUES ('%s', '%s')" % (date, temp)
 	try:
    		# Execute the SQL command
