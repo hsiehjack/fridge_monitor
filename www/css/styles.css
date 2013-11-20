@@ -1,0 +1,21 @@
+* {
+	padding: 0;
+	margin: 0;
+	border: 0;
+}
+
+#container {
+	width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#gauge {
+	float: left;
+	width: 200px;
+}
+
+#graph {
+	float: left;
+	width: 800px;
+}
