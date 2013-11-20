@@ -7,12 +7,11 @@ if (!$con) {
 }
 
 mysqli_select_db($con, 'pi');
-$sql="SELECT date, temp FROM datetemp ORDER BY id DESC LIMIT 1";
-
-$result = mysqli_query($con, $sql);
 
 switch ($style) {
 	case "gauge":
+		$sql="SELECT temp FROM datetemp ORDER BY id DESC LIMIT 1";
+		$result = mysqli_query($con, $sql);
 		$table = array(
     		'cols' => array(
         		'id' => 'Label', 'label' => 'Label', 'type' => 'string',
@@ -27,6 +26,25 @@ switch ($style) {
             		'v' => $row['temp']
   	 		);
 		}
+		break;
+
+	case "graph":
+		$sql="SELECT date, temp FROM datetemp ORDER BY id DESC LIMIT 100";
+		$result = mysqli_query($con, $sql);
+		$table = <<<JSONHERE
+{
+	"cols": [
+		{"id": "DateTime", "label": "DateTime", "type":"string"},
+		{"id": "Temp", "label": "Temp", "type":"number"}
+	],
+	"rows": [
+JSONHERE;
+		$count = 0;
+		while ($row = mysqli_fetch_assoc($result)) {
+			if ($count++ > 0) $table .= ",";
+			$table .= "{\"c\":[{\"v\": \"" . $row['date'] . "\"}, {\"v\": " . $row['temp'] . "}]}";
+		}
+		$table .= "]}";
 		break;
 }
 
