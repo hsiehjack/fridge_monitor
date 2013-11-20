@@ -17,7 +17,7 @@ switch ($style) {
         		'id' => 'Label', 'label' => 'Label', 'type' => 'string',
         		'id' => 'Value', 'label' => 'Value', 'type' => 'number'
     		),
-    		'rows => array()
+    		'rows' => array()
 		);
 		while ($row = mysqli_fetch_assoc($result)) {
     		$table['rows'][] = 
