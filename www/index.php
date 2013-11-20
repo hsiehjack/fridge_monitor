@@ -63,9 +63,9 @@
 			var graphOptions = {
 				title: 'Temperature',
 				vAxis: {
-					gridlines:{count:5},
-					minValue: 0,
-					maxValue: 100
+					gridlines:{count:10},
+					minValue: 30,
+					maxValue: 50
 					} 
 				/*hAxis: {
 					gridlines:{count:3},

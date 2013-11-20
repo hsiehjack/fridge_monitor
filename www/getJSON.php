@@ -19,8 +19,8 @@ switch ($style) {
 		);
 		while($row = mysqli_fetch_array($result)){ 
 			$data = array();
-			$data[] = array('v' => $row['date']);
-			$data[] = array('v' => $row['temp'];
+			$data[] = array('v' => "Temperature");
+			$data[] = array('v' => $row['temp']);
 			$rows[] = array('c' => $data);
 		}
 		$table['rows'] = $rows;
@@ -29,20 +29,17 @@ switch ($style) {
 	case "graph":
 		$sql="SELECT date, temp FROM datetemp ORDER BY id DESC LIMIT 100";
 		$result = mysqli_query($con, $sql);
-		$table = <<<JSONHERE
-{
-	"cols": [
-		{"id": "DateTime", "label": "DateTime", "type":"string"},
-		{"id": "Temp", "label": "Temp", "type":"number"}
-	],
-	"rows": [
-JSONHERE;
-		$count = 0;
-		while ($row = mysqli_fetch_assoc($result)) {
-			if ($count++ > 0) $table .= ",";
-			$table .= "{\"c\":[{\"v\": \"" . $row['date'] . "\"}, {\"v\": " . $row['temp'] . "}]}";
+		$table['cols'] = array(
+		    array('id' => 'DateTime', 'label' => 'DateTime', 'type' => 'string'),
+		    array('id' => 'Temp', 'label' => 'Temp', 'type' => 'number')
+		);
+		while($row = mysqli_fetch_array($result)){ 
+			$data = array();
+			$data[] = array('v' => $row['date']);
+			$data[] = array('v' => $row['temp']);
+			$rows[] = array('c' => $data);
 		}
-		$table .= "]}";
+		$table['rows'] = $rows;
 		break;
 }
 
