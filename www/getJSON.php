@@ -3,16 +3,15 @@ $style = $_GET['style'];
 $con = mysqli_connect('localhost', 'pi', 'pi', 'pi');
 
 if (!$con) {
-	die('Cloud not connect: ' . mysqli_error($con));
+	die('Could not connect: ' . mysqli_error($con));
 }
 mysqli_select_db($con, 'pi');
-
 abstract class chart_api {
 	protected $json;
 	abstract public function insert_col($col);
 	abstract public function insert_row($row);
 	public function get_json() {
-		return json_encode($this->$json);
+		return json_encode($this->json);
 	}
 }
 class graph extends chart_api {
@@ -38,7 +37,8 @@ switch ($style) {
 		}
 		break;
 	case "graph":
-		$sql="SELECT date, temp FROM datetemp ORDER BY id DESC LIMIT 100";
+//		$sql="SELECT date, temp FROM datetemp ORDER BY id LIMIT 100";
+		$sql="SELECT * FROM (SELECT * FROM datetemp ORDER BY id DESC LIMIT 100) this ORDER BY this.id";
 		$result = mysqli_query($con, $sql);
 		$obj = new graph;
 		$obj->insert_col(array('id' => 'DateTime', 'label' => 'DateTime', 'type' => 'string'));
