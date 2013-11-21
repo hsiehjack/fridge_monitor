@@ -16,10 +16,10 @@ abstract class chart_api {
 }
 class graph extends chart_api {
 	public function insert_col($col) {
-		$this->json['cols'] = $col;
+		$this->json['cols'][] = $col;
 	}
 	public function insert_row($row) {
-		$this->json['rows'] = $row;
+		$this->json['rows'][] = $row;
 	}
 }
 switch ($style) {
