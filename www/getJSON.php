@@ -16,10 +16,10 @@ abstract class chart_api {
 }
 class graph extends chart_api {
 	public function insert_col($col) {
-		$this->$json['cols'][] = $col;
+		$this->json['cols'] = $col;
 	}
 	public function insert_row($row) {
-		$this->$json['rows'][] = $row;
+		$this->json['rows'] = $row;
 	}
 }
 switch ($style) {
@@ -30,10 +30,10 @@ switch ($style) {
 		$obj->insert_col(array('id' => 'Label', 'label' => 'Label', 'type' => 'string'));
 		$obj->insert_col(array('id' => 'Value', 'label' => 'Value', 'type' => 'number'));
 		while($row = mysqli_fetch_array($result)){ 
-			$obj->insert_row('c' => array(
+			$obj->insert_row(array('c' => array(
 				array('v' => "Temperature"),
-				array('v' => $row['temp']),
-				));
+				array('v' => $row['temp'])
+				)));
 		}
 		break;
 	case "graph":
@@ -44,10 +44,10 @@ switch ($style) {
 		$obj->insert_col(array('id' => 'DateTime', 'label' => 'DateTime', 'type' => 'string'));
 		$obj->insert_col(array('id' => 'Temp', 'label' => 'Temp', 'type' => 'number'));
 		while($row = mysqli_fetch_array($result)){ 
-			$obj->insert_row('c' => array(
+			$obj->insert_row(array('c' => array(
 				array('v' => $row['date']),
-				array('v' => $row['temp']),
-				));
+				array('v' => $row['temp'])
+				)));
 		}
 		break;
 }
