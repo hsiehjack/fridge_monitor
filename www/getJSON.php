@@ -41,11 +41,11 @@ switch ($style) {
 		$sql="SELECT * FROM (SELECT * FROM datetemp ORDER BY id DESC LIMIT 100) this ORDER BY this.id";
 		$result = mysqli_query($con, $sql);
 		$obj = new graph;
-		$obj->insert_col(array('id' => 'DateTime', 'label' => 'DateTime', 'type' => 'string'));
+		$obj->insert_col(array('id' => 'DateTime', 'label' => 'DateTime', 'type' => 'datetime'));
 		$obj->insert_col(array('id' => 'Temp', 'label' => 'Temp', 'type' => 'number'));
 		while($row = mysqli_fetch_array($result)){ 
 			$obj->insert_row(array('c' => array(
-				array('v' => $row['date']),
+				array('v' => new Date($row['date'])),
 				array('v' => $row['temp'])
 				)));
 		}
@@ -53,4 +53,3 @@ switch ($style) {
 }
 mysqli_close($con);
 echo $obj->get_json(); 
-?>
