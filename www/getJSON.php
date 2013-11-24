@@ -44,8 +44,9 @@ switch ($style) {
 		$obj->insert_col(array('id' => 'DateTime', 'label' => 'DateTime', 'type' => 'datetime'));
 		$obj->insert_col(array('id' => 'Temp', 'label' => 'Temp', 'type' => 'number'));
 		while($row = mysqli_fetch_array($result)){ 
+			$datetime = $row['date'];
 			$obj->insert_row(array('c' => array(
-				array('v' => new Date($row['date'])),
+				array('v' => "Date($datetime)"),
 				array('v' => $row['temp'])
 				)));
 		}
@@ -53,3 +54,4 @@ switch ($style) {
 }
 mysqli_close($con);
 echo $obj->get_json(); 
+?>
