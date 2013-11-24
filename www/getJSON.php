@@ -44,7 +44,7 @@ switch ($style) {
 		$obj->insert_col(array('id' => 'DateTime', 'label' => 'DateTime', 'type' => 'datetime'));
 		$obj->insert_col(array('id' => 'Temp', 'label' => 'Temp', 'type' => 'number'));
 		while($row = mysqli_fetch_array($result)){ 
-			$datetime = preg_split("[- :]", $row['date']);
+			$datetime = preg_split('/\D+/', $row['date']);
 			$dateout  = implode(", ", $datetime);
 			$obj->insert_row(array('c' => array(
 				array('v' => "Date($dateout)"),
