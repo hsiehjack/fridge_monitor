@@ -38,7 +38,7 @@ switch ($style) {
 		break;
 	case "graph":
 //		$sql="SELECT date, temp FROM datetemp ORDER BY id LIMIT 100";
-		$sql="SELECT * FROM (SELECT * FROM datetemp ORDER BY id DESC LIMIT 100) this ORDER BY this.id";
+		$sql="SELECT * FROM (SELECT * FROM datetemp ORDER BY id DESC LIMIT 4320) this ORDER BY this.id";
 		$result = mysqli_query($con, $sql);
 		$obj = new graph;
 		$obj->insert_col(array('id' => 'DateTime', 'label' => 'DateTime', 'type' => 'datetime'));

@@ -4,13 +4,8 @@
 	<script type='text/javascript' src='https://www.google.com/jsapi'></script>
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script type='text/javascript'>
-		google.load('visualization', '1', {packages:['corechart', 'gauge']});
+		google.load('visualization', '1', {packages:['annotatedtimeline', 'corechart', 'gauge']});
 		google.setOnLoadCallback(drawChart);
-                var jsonData = $.ajax({
-                        url: "getJSON.php",
-                        dataType:"json",
-                        async: false
-                        }).responseText;
 		function drawChart() {
 /*
 			var jsonData = $.ajax({
@@ -18,8 +13,7 @@
 				dataType:"json",
 				async: false
 			}).responseText;
-*/
-/* Static Gauge Datatable JSON
+// Static Gauge Datatable JSON
 			var jsonData = {
 				cols: [
 					{id: 'Label', label: 'Label', type:'string'},
@@ -30,29 +24,24 @@
 					{c:[{v: 'Door Opened'}, {v: 0}]}
 				]
 			}
-*/
-/* Static Gauge DataTable
+// Static Gauge DataTable
 			var data = google.visualization.arrayToDataTable([
 				['Label', 'Value'],
 				['Temperature', 80],
 			]);
 */
-
-			var gaugeJsonData = $.ajax({
+			gauge();
+			graph();
+			timeline();
+		}
+		function gauge() {
+			var jsonData = $.ajax({
 				url: "getJSON.php?style=gauge",
 				dataType:"json",
 				async: false
 			}).responseText;
-			var graphJsonData = $.ajax({
-				url: "getJSON.php?style=graph",
-				dataType:"json",
-				async: false
-			}).responseText;
-
-			var gaugeData = new google.visualization.DataTable(gaugeJsonData);
-			var graphData = new google.visualization.DataTable(graphJsonData);
-
-			var gaugeOptions = {
+			var data = new google.visualization.DataTable(jsonData);
+			var options = {
 				width: 200, height: 200,
 				greenFrom: 32, greenTo: 40,
 				yellowFrom:40, yellowTo: 50,
@@ -60,7 +49,17 @@
 				minorTicks: 10, majorTicks: [30, 40, 50, 60, 70, 80],
 				min: 30, max: 80,
 			};
-			var graphOptions = {
+			var gauge = new google.visualization.Gauge(document.getElementById('gauge'));
+			gauge.draw(data, options);
+		}
+		function graph() {
+			var jsonData = $.ajax({
+				url: "getJSON.php?style=graph",
+				dataType:"json",
+				async: false
+			}).responseText;
+			var data = new google.visualization.DataTable(jsonData);
+			var options = {
 				title: 'Temperature',
 				vAxis: {
 					gridlines:{count:10},
@@ -73,15 +72,25 @@
 					maxValue: new Date(2012, 9, 30),
 					}*/	
 			};
-
-			var gauge = new google.visualization.Gauge(document.getElementById('gauge'));
 			var graph = new google.visualization.LineChart(document.getElementById('graph'));
-
-			gauge.draw(gaugeData, gaugeOptions);
-			graph.draw(graphData, graphOptions);
+			graph.draw(data, options);
 		}
+		function timeline() {
+			var jsonData = $.ajax({
+				url: "getJSON.php?style=graph",
+				dataType: "json",
+				async: false
+			}).responseText;
+			var data = new google.visualization.DataTable(jsonData);
+			var options = {
+			};
+			var timeline = new google.visualization.AnnotatedTimeLine(document.getElementById('timeline'));
+			timeline.draw(data, options);
+		}
+
 		// This will redraw the charts
-		setInterval(drawChart, 5000);
+		setInterval(gauge, 5000);
+		setInterval(graph, 5000);
 	</script>
 	<link rel="stylesheet" type="text/css" href="css/styles.css" />
 </head>
@@ -89,6 +98,7 @@
 	<div id="container">
 		<div id="gauge"></div>
 		<div id="graph"></div>
+		<div id="timeline"></div>
 	</div>
 </body>
 </html>

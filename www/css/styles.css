@@ -18,4 +18,10 @@
 #graph {
 	float: left;
 	width: 800px;
+	height: 200px;
+}
+
+#timeline {
+	width: inherit;
+	height: 400px;
 }
