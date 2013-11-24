@@ -60,7 +60,7 @@
 			}).responseText;
 			var data = new google.visualization.DataTable(jsonData);
 			var options = {
-				title: 'Temperature',
+				title: 'Last hour Temperature',
 				vAxis: {
 					gridlines:{count:10},
 					minValue: 30,
