@@ -52,6 +52,21 @@ switch ($style) {
 				)));
 		}
 		break;
+	case "timeline":
+		$sql="SELECT * FROM datetemp ORDER BY id";
+		$result = mysqli_query($con, $sql);
+		$obj = new graph;
+		$obj->insert_col(array('id' => 'DateTime', 'label' => 'DateTime', 'type' => 'datetime'));
+		$obj->insert_col(array('id' => 'Temp', 'label' => 'Temp', 'type' => 'number'));
+		while($row = mysqli_fetch_array($result)){ 
+			$datetime = preg_split('/\D+/', $row['date']);
+			$dateout  = implode(", ", $datetime);
+			$obj->insert_row(array('c' => array(
+				array('v' => "Date($dateout)"),
+				array('v' => $row['temp'])
+				)));
+		}
+		break;
 }
 mysqli_close($con);
 echo $obj->get_json(); 

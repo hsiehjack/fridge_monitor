@@ -77,7 +77,7 @@
 		}
 		function timeline() {
 			var jsonData = $.ajax({
-				url: "getJSON.php?style=graph",
+				url: "getJSON.php?style=timeline",
 				dataType: "json",
 				async: false
 			}).responseText;
